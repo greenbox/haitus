@@ -48,7 +48,101 @@ int program2[] = { 0, 0,    10,   0,   // reg 0 = 10
                    3, (-3), 0,    0,   // jump back 3 instrs
                    6, 0,    0,    0 }; // exit
 
-void run_program(char *file, int verbosity, int program) { // we ignore the file for now
+void run_program_switch(char *file, int verbosity, int program) {
+  int regs[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+  int *ip;
+
+  if (program == 1)
+    ip = &program1;
+  else
+    ip = &program2;
+
+  for(;;) {
+    switch(ip[0]) {
+    case 0:
+      if (verbosity > 0)
+	printf("[op 0] setting reg %d to val %d\n",ip[1],ip[2]);
+
+      regs[ip[1]] = ip[2];
+      ip += 4; 
+
+      if (verbosity > 0)
+	printf("[op 0] next op is %d\n",ip[0]);
+
+      break;
+
+    case 1:
+      if (verbosity > 0)
+	printf("[op 1] adding reg%d(val=%d) to reg%d(val=%d), reg%d=%d\n",
+	       ip[1],regs[ip[1]],ip[2],regs[ip[2]],ip[1],
+	       regs[ip[1]] + regs[ip[2]]);
+      
+      regs[ip[1]] = regs[ip[1]] + regs[ip[2]];
+      ip += 4;
+      
+      if (verbosity > 0)
+	printf("[op 1] next op is %d\n",ip[0]);
+      
+      break;
+
+    case 2:
+      printf("[op 2] reg %d ==> %d\n",ip[1],regs[ip[1]]);
+      ip += 4; 
+      
+      if (verbosity > 0)
+	printf("[op 2] next op is %d\n",ip[0]);
+      break;
+
+    case 3:
+      if (verbosity > 0)
+	printf("[op 3] jumping %s %d opcodes\n",
+	       ip[1] > 0 ? "forward" : "back",abs(ip[1]));
+      
+      ip += (ip[1]*4);
+      
+      if (verbosity > 0)
+	printf("[op 3] next op is %d\n",ip[0]);
+      break;
+
+    case 4:
+      if (verbosity > 0)
+	printf("[op 4] executing next instruction (op %d) if reg%d == %d\n",
+	       ip[4],regs[ip[1]], ip[2]);
+      
+      if(regs[ip[1]] == ip[2])
+	ip += 4;
+      else
+	ip += 8;
+      
+      if (verbosity > 0)
+	printf("[op 4] next op is %d\n",ip[0]);
+      break;
+
+    case 5:
+      if (verbosity > 0)
+	printf("[op 5] skipping next instruction (op %d) if reg%d == %d\n",
+	       ip[4],regs[ip[1]], ip[2]);
+      
+      if(regs[ip[1]] == ip[2])
+	ip += 8;
+      else
+	ip += 4;
+      
+      if (verbosity > 0)
+	printf("[op 5] next op is %d\n",ip[0]);
+      break;
+    case 6:
+      if (verbosity > 0)
+	printf("[op 6] exiting\n");
+      goto end;
+    }
+  }
+
+end:
+  return;
+}
+
+void run_program_dispatch(char *file, int verbosity, int program) { // we ignore the file for now
   void *func_table[] = { &&set, 
 			 &&add, 
 			 &&show, 
@@ -56,7 +150,7 @@ void run_program(char *file, int verbosity, int program) { // we ignore the file
 			 &&nextif, 
 			 &&skipif, 
 			 &&exit };
-  int  regs[]        = { 0, 0, 0, 0, 0, 0, 0 };
+  int  regs[]        = { 0, 0, 0, 0, 0, 0, 0, 0 };
   int  *ip;
 
   if(program == 1) {

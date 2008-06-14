@@ -19,6 +19,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-void run_program(char *, int, int);
+void run_program_switch(char *, int, int);
+void run_program_dispatch(char *, int, int);
 
 #endif

@@ -73,7 +73,14 @@ int main(int ac, char **av) {
   } 
   printf("Loading file %s...\n",av[0]);
   */
-  run_program("nil",verbosity,1);
-  run_program("nil",verbosity,2);
+#ifdef USE_SWITCH
+  printf("Using switch interpreter...\n");
+  run_program_switch("nil",verbosity,1);
+  run_program_switch("nil",verbosity,2);
+#else
+  printf("Using dispatch interpreter...\n");
+  run_program_dispatch("nil",verbosity,1);
+  run_program_dispatch("nil",verbosity,2);
+#endif
   return 0;
 }
