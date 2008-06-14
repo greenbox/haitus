@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <time.h>
 #include "config.h"
 #include "engine.h"
 
@@ -47,6 +48,7 @@ void usage() {
 int main(int ac, char **av) {
   int c;
   int verbosity = 0;
+  time_t t1,t2;
 
   while((c = getopt_long(ac,av,"vVh", longopts, NULL)) != -1) {
     switch(c) {
@@ -72,6 +74,7 @@ int main(int ac, char **av) {
   } 
   printf("Loading file %s...\n",av[0]);
   */
+  t1 = time(NULL);
 #ifdef USE_SWITCH
   printf("Using switch interpreter...\n");
   run_program_switch("nil",verbosity,1);
@@ -85,5 +88,7 @@ int main(int ac, char **av) {
   run_program_dispatch("nil",verbosity,3);
   run_program_dispatch("nil",verbosity,4);
 #endif
+  t2 = time(NULL);
+  printf("Time spent: %f\n",difftime(t2,t1));
   return 0;
 }
