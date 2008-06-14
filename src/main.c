@@ -3,6 +3,7 @@
 #include <getopt.h>
 #include <llvm-c/Core.h>
 #include "config.h"
+#include "engine.h"
 
 static struct option longopts[] = {
   { "verbose", no_argument, NULL, 'v'},
@@ -33,7 +34,7 @@ int main(int ac, char **av) {
   while((c = getopt_long(ac,av,"vVh", longopts, NULL)) != -1) {
     switch(c) {
     case 'v':
-      printf("Verbosity is at %d.\n",++verbosity);
+      verbosity = 1;
       break;
     case 'V':
       version();
@@ -49,9 +50,10 @@ int main(int ac, char **av) {
 
   if(1 > ac) {
     printf("Need a file.\n");
-  } else {
-    printf("Loading file %s...\n",av[0]);
-  }
+    exit(-1);
+  } 
+  printf("Loading file %s...\n",av[0]);
+  run_file(av[0],verbosity);
 
   return 0;
 }

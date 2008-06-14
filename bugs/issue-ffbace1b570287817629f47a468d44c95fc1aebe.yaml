@@ -1,0 +1,20 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: add jmp opcodes
+desc: |-
+  it might be interesting to outfit this with flow control; jmp opcodes seem easy,
+  we just need a form of addressing.
+type: :task
+component: haitus
+release: "0.1"
+reporter: Austin Seipp <mad.one@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-06-14 15:33:55.370409 Z
+references: []
+
+id: ffbace1b570287817629f47a468d44c95fc1aebe
+log_events: 
+- - 2008-06-14 15:33:56.522269 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - created
+  - ""

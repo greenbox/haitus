@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: need to be able to load bytecode ops from a file
+desc: |-
+  currently the program is embedded in the int array inside engine.c
+  
+  we need to be able to load from a file for the future, and some tool
+  to generate bytecode ops
+type: :task
+component: haitus
+release: "0.1"
+reporter: Austin Seipp <mad.one@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-06-14 15:14:43.548018 Z
+references: []
+
+id: 4a267d59506c47c009e2094efb4ec2dee77dd74f
+log_events: 
+- - 2008-06-14 15:14:45.068330 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - created
+  - ""
