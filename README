@@ -1,2 +1,31 @@
-haitus is a virtual machine using LLVM
-it's in the works.
+haitus: a simple virtual machine using LLVM
+version: 0.1
+
+
+1. what it is:
+==============
+haitus is a virtual machine I've written, primarily
+to play with LLVM.
+
+2. how do I use it:
+===================
+right now, the only method of tracking haitus is the
+git repository. it has no location (yet)
+
+after you get it, you'll need to follow these steps to
+install it:
+
+ $ autoreconf --install
+ $ configure --prefix=$HOME
+ $ make
+ $ make install
+
+done. haitus is installed, and have a nice day. :)
+
+3. bugfixes/patches
+===================
+you can email bugfixes and patches to:
+  mad.one@killspam.gmail.com (without the 'killspam.' prefix)
+
+you may also ask me questions there if you wish.
+

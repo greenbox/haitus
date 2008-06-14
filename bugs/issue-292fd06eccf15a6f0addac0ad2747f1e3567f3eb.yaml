@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: command line argument handling
+desc: use getopt_long (getopt.h) to implement nice command line options
+type: :feature
+component: haitus
+release: "0.1"
+reporter: Austin Seipp <mad.one@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-14 11:56:04.985625 Z
+references: []
+
+id: 292fd06eccf15a6f0addac0ad2747f1e3567f3eb
+log_events: 
+- - 2008-06-14 11:56:06.217548 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - created
+  - ""
+- - 2008-06-14 11:56:14.577823 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - closed issue with disposition fixed
+  - ""
+- - 2008-06-14 12:02:50.832132 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - closed issue with disposition fixed
+  - ""

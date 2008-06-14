@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: actually write --help output (usage in main.c)
+desc: |-
+  right now, it's NIH (not invented here,) so I need to do it soon enough after I've
+  solidified the command line options a little
+type: :bugfix
+component: haitus
+release: "0.1"
+reporter: Austin Seipp <mad.one@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-14 11:55:00.616589 Z
+references: []
+
+id: 105b1b6f8afaa003cc1bd292d12bb31e8ac3d659
+log_events: 
+- - 2008-06-14 11:55:04.504676 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - created
+  - ""
+- - 2008-06-14 11:57:52.227252 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2008-06-14 12:03:41.192766 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - closed issue with disposition fixed
+  - ""

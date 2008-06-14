@@ -1,4 +1,4 @@
 bin_PROGRAMS     = haitus
 haitus_SOURCES   = main.c
-haitus_CPPFLAGS  = -I@llvm_include@
-haitus_LDADD     = @llvm_libs@
+haitus_CPPFLAGS  = @llvm_cppflags@
+haitus_LDADD     = @llvm_ldflags@ @llvm_libs@ -lstdc++
