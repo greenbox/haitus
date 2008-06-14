@@ -16,9 +16,12 @@ after you get it, you'll need to follow these steps to
 install it:
 
  $ autoreconf --install
- $ configure --prefix=$HOME
+ $ ./configure --prefix=$HOME
  $ make
- $ make install
+ $ ./src/haitus -h
+
+if you want to use the switch-based interpreter, pass
+`CPPFLAGS=-DUSE_SWITCH` to ./configure
 
 done. haitus is installed, and have a nice day. :)
 

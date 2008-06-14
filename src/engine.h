@@ -21,5 +21,6 @@
 
 void run_program_switch(char *, int, int);
 void run_program_dispatch(char *, int, int);
+void program_direct_threaded();
 
 #endif

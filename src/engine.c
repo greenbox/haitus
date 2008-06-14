@@ -38,7 +38,7 @@
     9,  r,  v,  0  -- skip-next-if: skip next instruction if val in reg 'r'  == v
     10, r,  0,  0  -- print string at data index 'r'
     11, 0,  0,  0  -- exit
-o */
+  */
 
 void* data[] = { "fizz",
 		 "buzz",
@@ -432,5 +432,24 @@ void run_program_dispatch(char *file, int verbosity, int program) { // we ignore
   if (verbosity >= 3)
     printf("[op 11] exiting\n");
 
+  return;
+}
+
+void program_direct_threaded() {
+  static void *prog[] = { &&set, &&show, &&exit }; 
+  int regs[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+  void **ip = prog;
+  goto **ip++;
+  
+ set:
+  regs[0] = 2;
+  goto **ip++;
+  
+ show:
+  printf("reg0 == %d\n",regs[0]);
+  goto **ip++;
+  
+ exit:
   return;
 }

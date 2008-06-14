@@ -90,5 +90,9 @@ int main(int ac, char **av) {
 #endif
   t2 = time(NULL);
   printf("Time spent: %f\n",difftime(t2,t1));
+
+  printf("Using direct threaded...\n");
+  program_direct_threaded();
+
   return 0;
 }
