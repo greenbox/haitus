@@ -10,7 +10,9 @@ to play with LLVM.
 2. how do I use it:
 ===================
 right now, the only method of tracking haitus is the
-git repository. it has no location (yet)
+git repository. you can clone it by doing:
+
+ $ git clone git://github.com/thoughtpolice/haitus.git
 
 after you get it, you'll need to follow these steps to
 install it:
