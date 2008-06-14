@@ -48,12 +48,14 @@ int main(int ac, char **av) {
   ac -= optind;
   av += optind;
 
+  /*
   if(1 > ac) {
     printf("Need a file.\n");
     exit(-1);
   } 
   printf("Loading file %s...\n",av[0]);
-  run_file(av[0],verbosity);
-
+  */
+  run_program("nil",verbosity,1);
+  run_program("nil",verbosity,2);
   return 0;
 }

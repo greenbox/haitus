@@ -7,8 +7,8 @@ type: :task
 component: haitus
 release: "0.1"
 reporter: Austin Seipp <mad.one@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-06-14 15:33:55.370409 Z
 references: []
 
@@ -17,4 +17,8 @@ log_events:
 - - 2008-06-14 15:33:56.522269 Z
   - Austin Seipp <mad.one@gmail.com>
   - created
+  - ""
+- - 2008-06-14 16:10:53.141971 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - closed issue with disposition fixed
   - ""
