@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
-#include <llvm-c/Core.h>
 #include "config.h"
 #include "engine.h"
 
@@ -52,7 +51,7 @@ int main(int ac, char **av) {
   while((c = getopt_long(ac,av,"vVh", longopts, NULL)) != -1) {
     switch(c) {
     case 'v':
-      verbosity = 1;
+      verbosity++;
       break;
     case 'V':
       version();
@@ -77,10 +76,14 @@ int main(int ac, char **av) {
   printf("Using switch interpreter...\n");
   run_program_switch("nil",verbosity,1);
   run_program_switch("nil",verbosity,2);
+  run_program_switch("nil",verbosity,3);
+  run_program_switch("nil",verbosity,4);
 #else
   printf("Using dispatch interpreter...\n");
   run_program_dispatch("nil",verbosity,1);
   run_program_dispatch("nil",verbosity,2);
+  run_program_dispatch("nil",verbosity,3);
+  run_program_dispatch("nil",verbosity,4);
 #endif
   return 0;
 }
