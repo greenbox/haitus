@@ -21,7 +21,6 @@
 #include <getopt.h>
 #include <time.h>
 #include "config.h"
-#include "engine.h"
 
 static struct option longopts[] = {
   { "verbose", no_argument, NULL, 'v'},
@@ -67,32 +66,15 @@ int main(int ac, char **av) {
   ac -= optind;
   av += optind;
 
-  /*
-  if(1 > ac) {
-    printf("Need a file.\n");
-    exit(-1);
-  } 
-  printf("Loading file %s...\n",av[0]);
-  */
   t1 = time(NULL);
-#ifdef USE_SWITCH
-  printf("Using switch interpreter...\n");
-  run_program_switch("nil",verbosity,1);
-  run_program_switch("nil",verbosity,2);
-  run_program_switch("nil",verbosity,3);
-  run_program_switch("nil",verbosity,4);
-#else
-  printf("Using dispatch interpreter...\n");
-  run_program_dispatch("nil",verbosity,1);
-  run_program_dispatch("nil",verbosity,2);
-  run_program_dispatch("nil",verbosity,3);
-  run_program_dispatch("nil",verbosity,4);
-#endif
+
+  run_program(verbosity,1);
+  run_program(verbosity,2);
+  run_program(verbosity,3);
+  run_program(verbosity,4);
+
   t2 = time(NULL);
   printf("Time spent: %f\n",difftime(t2,t1));
-
-  printf("Using direct threaded...\n");
-  program_direct_threaded();
 
   return 0;
 }
