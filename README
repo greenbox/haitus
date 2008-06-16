@@ -15,17 +15,11 @@ git repository. you can clone it by doing:
  $ git clone git://github.com/thoughtpolice/haitus.git
 
 after you get it, you'll need to follow these steps to
-install it:
+build it:
 
- $ autoreconf --install
- $ ./configure --prefix=$HOME
  $ make
- $ ./src/haitus -h
 
-if you want to use the switch-based interpreter, pass
-`CPPFLAGS=-DUSE_SWITCH` to ./configure
-
-done. haitus is installed, and have a nice day. :)
+done. haitus is built in src/, and have a nice day. :)
 
 3. bugfixes/patches
 ===================
