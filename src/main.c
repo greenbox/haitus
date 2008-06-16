@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <time.h>
-#include "config.h"
 
 static struct option longopts[] = {
   { "verbose", no_argument, NULL, 'v'},
@@ -30,7 +29,7 @@ static struct option longopts[] = {
 };
 
 void version() {
-  printf(PACKAGE_STRING ": simple LLVM virtual machine.\n");
+  printf("haitus v0.1: simple virtual machine\n");
   exit(0);
 }
 
