@@ -18,6 +18,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <math.h>
 
 /* we use a RISC-like approach; all opcodes are of the same length
@@ -83,6 +84,20 @@ int program4[] = { 0,    0, 15,  0,   // reg 0 = 10
 		   7, (-10), 0,  0,   // jump back 10 instructions
                    11,   0, 0,   0 }; // exit
 
+int verboseprintf(int verbose, char *fmt, ...) {
+  va_list va;
+  int x;
+
+  va_start(va,fmt);
+  if(verbose >= 3)
+    x = vprintf(fmt,va);
+  else
+    x = 0;
+  va_end(va);
+
+  return x;
+}
+
 void run_program(int verbosity, int program) { 
   void *func_table[] = { &&set,      // byte 0
 			 &&add,      // byte 1
@@ -117,169 +132,126 @@ void run_program(int verbosity, int program) {
 
  set:
   if (ip[3] == 0) {
-    if (verbosity >= 3)
-      printf("[op 0] setting reg %d to val %d\n",ip[1],ip[2]);
+    verboseprintf(verbosity,"[op 0] setting reg %d to val %d\n",ip[1],ip[2]);
     regs[ip[1]] = ip[2];
   } else if (ip[3] == 1) {
-    if (verbosity >= 3)
-      printf("[op 0] setting reg %d to reg%d(%d)\n",ip[1],ip[2],regs[ip[2]]);
+    verboseprintf(verbosity,"[op 0] setting reg %d to reg%d(%d)\n",ip[1],ip[2],regs[ip[2]]);
     regs[ip[1]] = regs[ip[2]];
   }
   
   ip += 4; 
-
-  if (verbosity >= 3)
-    printf("[op 0] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 0] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  add:
-  if (verbosity >= 3)
-    printf("[op 1] setting reg%d = reg%d + reg%d (%d)\n",
-	   ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
+  verboseprintf(verbosity,"[op 1] setting reg%d = reg%d + reg%d (%d)\n",
+		ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] + regs[ip[3]];
   ip += 4;
-  
-  if (verbosity >= 3)
-    printf("[op 1] next op is %d\n",ip[0]);
+
+  verboseprintf(verbosity,"[op 1] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
   
  sub:
-  if (verbosity >= 3)
-    printf("[op 2] setting reg%d = reg%d - reg%d (%d)\n",
-	   ip[1],ip[2],ip[3], regs[ip[2]] - regs[ip[3]]);
+  verboseprintf(verbosity,"[op 2] setting reg%d = reg%d - reg%d (%d)\n",
+		ip[1],ip[2],ip[3], regs[ip[2]] - regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] - regs[ip[3]];
   ip += 4;
   
-  if (verbosity >= 3)
-    printf("[op 2] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 2] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
   
  mul:
-  if (verbosity >= 3)
-    printf("[op 3] setting reg%d = reg%d * reg%d (%d)\n",
-	   ip[1],ip[2],ip[3], regs[ip[2]] * regs[ip[3]]);
+  verboseprintf(verbosity,"[op 3] setting reg%d = reg%d * reg%d (%d)\n",
+		ip[1],ip[2],ip[3], regs[ip[2]] * regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] * regs[ip[3]];
   ip += 4;
   
-  if (verbosity >= 3)
-    printf("[op 3] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 3] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  div:
-  if (verbosity >= 3)
-    printf("[op 4] setting reg%d = reg%d / reg%d (%d)\n",
-	   ip[1],ip[2],ip[3], regs[ip[2]] / regs[ip[3]]);
+  verboseprintf(verbosity,"[op 4] setting reg%d = reg%d / reg%d (%d)\n",
+		ip[1],ip[2],ip[3], regs[ip[2]] / regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] / regs[ip[3]];
   ip += 4;
   
-  if (verbosity >= 3)
-    printf("[op 4] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 4] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  mod:
-  if (verbosity >= 3)
-    printf("[op 5] setting reg%d = reg%d + reg%d (%d)\n",
-	   ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
+  verboseprintf(verbosity,"[op 5] setting reg%d = reg%d + reg%d (%d)\n",
+		ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] % regs[ip[3]];
   ip += 4;
   
-  if (verbosity >= 3)
-    printf("[op 5] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 5] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  show:
   printf("[op 6] reg %d ==> %d\n",ip[1],regs[ip[1]]);
   ip += 4; 
 
-  if (verbosity >= 3)
-    printf("[op 6] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 6] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  jump:
-  if (verbosity >= 3)
-    printf("[op 7] jumping %s %d opcodes\n",
-	   ip[1] > 0 ? "forward" : "back",abs(ip[1]));
+  verboseprintf(verbosity,"[op 7] jumping %s %d opcodes\n",
+		ip[1] > 0 ? "forward" : "back",abs(ip[1]));
 
   ip += (ip[1]*4);
 
-  if (verbosity >= 3)
-    printf("[op 7] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 7] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  nextif:
-  if (verbosity >= 3)
-    printf("[op 8] executing next instruction (op %d) if reg%d == %d\n",
-	   ip[4],ip[1], ip[2]);
+  verboseprintf(verbosity,"[op 8] executing next instruction (op %d) if reg%d == %d\n",
+		ip[4],ip[1], ip[2]);
 
   if(regs[ip[1]] == ip[2])
     ip += 4;
   else
     ip += 8;
 
-  if (verbosity >= 3)
-    printf("[op 8] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 8] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
 
  skipif:
-  if (verbosity >= 3)
-    printf("[op 9] skipping next instruction (op %d) if reg%d == %d\n",
-	   ip[4],ip[1], ip[2]);
+  verboseprintf(verbosity,"[op 9] skipping next instruction (op %d) if reg%d == %d\n",
+		ip[4],ip[1], ip[2]);
 
   if(regs[ip[1]] == ip[2])
     ip += 8;
   else
     ip += 4;
 
-  if (verbosity >= 3)
-    printf("[op 9] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 9] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  printstr:
-  if (verbosity >= 3)
-    printf("[op 10] printing string, data index %d\n",ip[1]);
+  verboseprintf(verbosity,"[op 10] printing string, data index %d\n",ip[1]);
   
   printf("%s\n",data[ip[1]]);
   ip += 4;
   
-  if (verbosity >= 3)
-    printf("[op 10] next op is %d\n",ip[0]);
+  verboseprintf(verbosity,"[op 10] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
 
  exit:
-  if (verbosity >= 3)
-    printf("[op 11] exiting\n");
+  verboseprintf(verbosity,"[op 11] exiting\n");
 
-  return;
-}
-
-void program_direct_threaded() {
-  static void *prog[] = { &&set, &&show, &&exit }; 
-  int regs[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-
-  void **ip = prog;
-  goto **ip++;
-  
- set:
-  regs[0] = 2;
-  goto **ip++;
-  
- show:
-  printf("reg0 == %d\n",regs[0]);
-  goto **ip++;
-  
- exit:
   return;
 }
