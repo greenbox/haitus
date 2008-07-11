@@ -1,11 +1,14 @@
-haitus: a simple virtual machine using LLVM
+haitus: a simple virtual machine
 version: 0.1
 
 
 1. what it is:
 ==============
-haitus is a virtual machine I've written, primarily
-to play with LLVM.
+haitus is a simple virtual machine I've written for no particular
+reason other than an experiment.
+
+in the future, I plan to have a compiler for it as well as package it
+into a library.
 
 2. how do I use it:
 ===================
@@ -26,5 +29,5 @@ done. haitus is built in src/, and have a nice day. :)
 you can email bugfixes and patches to:
   mad.one@killspam.gmail.com (without the 'killspam.' prefix)
 
-you may also ask me questions there if you wish.
-
+if you wish to ask questions, you can use the above address as
+well.
