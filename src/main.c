@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
-#include <time.h>
 
 static struct option longopts[] = {
   { "verbose", no_argument, NULL, 'v'},
@@ -65,15 +64,10 @@ int main(int ac, char **av) {
   ac -= optind;
   av += optind;
 
-  t1 = time(NULL);
-
   run_program(verbosity,1);
   run_program(verbosity,2);
   run_program(verbosity,3);
   run_program(verbosity,4);
-
-  t2 = time(NULL);
-  printf("Time spent: %f\n",difftime(t2,t1));
 
   return 0;
 }
