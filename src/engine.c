@@ -33,7 +33,7 @@
     4,  r1, r2, r3 -- divide val in r2 by r3 and store in r1
     5,  r1, r2, r3 -- mod val in r2 by r3 and store in r1
     6,  x,  0,  0  -- show reg #x
-    7,  n,  0,  0  -- jump #n opcodes back/forwards (depends on value)
+    7,  n,  0,  0  -- jump #n opcodes back/forwards (depends if it's positive/negative)
     8,  r,  v,  0  -- do-next-if: execute next instruction if val in reg 'r' == v
     9,  r,  v,  0  -- skip-next-if: skip next instruction if val in reg 'r'  == v
     10, r,  0,  0  -- print string at data index 'r'
