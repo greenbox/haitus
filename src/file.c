@@ -25,9 +25,6 @@
 program *load_program_from_file(int verbosity, char* file) {
   program *prog        = NULL;
   FILE    *fd          = NULL;
-  char    *programcode = NULL;
-  int      proglen     = 0;
-  int      dataoffset  = 0;
 
   // we're declaring this static so it's saved and not mangled
   // when this function's stack frame returns and we go through several

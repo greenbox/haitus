@@ -6,7 +6,8 @@ CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = 
 OBJFILES    = main.o   \
 	      engine.o \
-              file.o 
+              file.o   \
+	      util.o
 
 all: $(OBJFILES)
 	$(CC) -o $(BIN) $(OBJFILES)

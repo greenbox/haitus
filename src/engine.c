@@ -85,21 +85,6 @@ int program4[] = { 0,    0, 15,  0,   // reg 0 = 10
 		   7, (-10), 0,  0,   // jump back 10 instructions
                    11,   0, 0,   0 }; // exit
 
-// verbose printf to remove lots of if statements
-int verboseprintf(int verbose, char *fmt, ...) {
-  va_list va;
-  int x;
-
-  va_start(va,fmt);
-  if(verbose >= 3)
-    x = vprintf(fmt,va);
-  else
-    x = 0;
-  va_end(va);
-
-  return x;
-}
-
 
 // runs the programs above with their static data section
 int run_program_static(int verbosity, int program) {
