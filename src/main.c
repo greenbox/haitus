@@ -45,7 +45,7 @@ void usage() {
 int main(int ac, char **av) {
   int c;
   int verbosity = 0;
-  time_t t1,t2;
+  int ret = 0;
 
   while((c = getopt_long(ac,av,"vVh", longopts, NULL)) != -1) {
     switch(c) {
@@ -64,10 +64,14 @@ int main(int ac, char **av) {
   ac -= optind;
   av += optind;
 
-  run_program(verbosity,1);
-  run_program(verbosity,2);
-  run_program(verbosity,3);
-  run_program(verbosity,4);
-
-  return 0;
+  if(av[0]) {
+    printf("Executing file %s\n",av[0]);
+    ret = run_program_from_file(verbosity,av[0]);
+  } else {
+    ret &= run_program_static(verbosity,1);
+    ret &= run_program_static(verbosity,2);
+    ret &= run_program_static(verbosity,3);
+    ret &= run_program_static(verbosity,4);
+  }
+  return ret;
 }

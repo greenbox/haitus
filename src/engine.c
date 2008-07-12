@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <math.h>
+#include "file.h"
 
 /* we use a RISC-like approach; all opcodes are of the same length
    and we use relative offsets for jumps. all opcodes are 32-bits
@@ -37,13 +38,13 @@
     8,  r,  v,  0  -- do-next-if: execute next instruction if val in reg 'r' == v
     9,  r,  v,  0  -- skip-next-if: skip next instruction if val in reg 'r'  == v
     10, r,  0,  0  -- print string at data index 'r'
-    11, 0,  0,  0  -- exit
+    11, n,  0,  0  -- exit with value 'n'
   */
 
-void* data[] = { "fizz",
-		 "buzz",
-		 "hello world!",
-		 "goodbye world!" };
+void* staticdata[] = { "fizz",
+		       "buzz",
+		       "hello world!",
+		       "goodbye world!" };
 
 
 // addition
@@ -84,6 +85,7 @@ int program4[] = { 0,    0, 15,  0,   // reg 0 = 10
 		   7, (-10), 0,  0,   // jump back 10 instructions
                    11,   0, 0,   0 }; // exit
 
+// verbose printf to remove lots of if statements
 int verboseprintf(int verbose, char *fmt, ...) {
   va_list va;
   int x;
@@ -98,21 +100,10 @@ int verboseprintf(int verbose, char *fmt, ...) {
   return x;
 }
 
-void run_program(int verbosity, int program) { 
-  void *func_table[] = { &&set,      // byte 0
-			 &&add,      // byte 1
-			 &&sub,      // byte 2
-			 &&mul,      // byte 3
-			 &&div,      // byte 4
-			 &&mod,      // byte 5
-			 &&show,     // byte 6
-			 &&jump,     // byte 7
-			 &&nextif,   // byte 8
-			 &&skipif,   // byte 9
-			 &&printstr, // byte 10
-			 &&exit };   // byte 11
-  int  regs[]        = { 0, 0, 0, 0, 0, 0, 0, 0 };
-  int  *ip;
+
+// runs the programs above with their static data section
+int run_program_static(int verbosity, int program) {
+  int *ip;
 
   if (program == 1) {
     ip = &program1;
@@ -127,6 +118,42 @@ void run_program(int verbosity, int program) {
     ip = &program4;
     printf("Executing program4:\n");
   }
+  return vm_engine(verbosity, ip, staticdata);
+}
+
+
+// executes a program from a file
+int run_program_from_file(int verbosity, char* file) {
+  program *prog = load_program_from_file(verbosity,file);
+  int ret = 0;
+
+  if(prog == NULL) {
+    printf("Error loading from file.\n"); ret = -1;
+  } else {
+    ret = vm_engine(verbosity,prog->ip,prog->dataseg);
+    free(prog);
+  }
+
+  return ret;
+}
+
+
+// main vm engine, runs a program with a specified data
+// segment
+int vm_engine(int verbosity, int *ip, void **dataseg) { 
+  void *func_table[] = { &&set,      // byte 0
+			 &&add,      // byte 1
+			 &&sub,      // byte 2
+			 &&mul,      // byte 3
+			 &&div,      // byte 4
+			 &&mod,      // byte 5
+			 &&show,     // byte 6
+			 &&jump,     // byte 7
+			 &&nextif,   // byte 8
+			 &&skipif,   // byte 9
+			 &&printstr, // byte 10
+			 &&exit };   // byte 11
+  int  regs[]        = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
   goto *func_table[ip[0]];
 
@@ -243,7 +270,7 @@ void run_program(int verbosity, int program) {
  printstr:
   verboseprintf(verbosity,"[op 10] printing string, data index %d\n",ip[1]);
   
-  printf("%s\n",data[ip[1]]);
+  printf("%s\n",dataseg[ip[1]]);
   ip += 4;
   
   verboseprintf(verbosity,"[op 10] next op is %d\n",ip[0]);
@@ -251,7 +278,6 @@ void run_program(int verbosity, int program) {
   goto *func_table[ip[0]];
 
  exit:
-  verboseprintf(verbosity,"[op 11] exiting\n");
-
-  return;
+  verboseprintf(verbosity,"[op 11] exiting with value %d\n",ip[1]);
+  return ip[1];
 }

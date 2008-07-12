@@ -9,7 +9,7 @@ type: :task
 component: haitus
 release: "0.1"
 reporter: Austin Seipp <mad.one@gmail.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2008-06-14 15:14:43.548018 Z
 references: []
@@ -19,4 +19,15 @@ log_events:
 - - 2008-06-14 15:14:45.068330 Z
   - Austin Seipp <mad.one@gmail.com>
   - created
+  - ""
+- - 2008-07-11 21:16:47.920595 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - commented
+  - |-
+    we definitely need to have a bytecode-file format since it can't just be
+    a string of raw numbers, meaning we have to have a way to serialize this structure
+    to disk; as well, this will be the file format an eventual compiler might compile to.
+- - 2008-07-12 05:00:56.270871 Z
+  - Austin Seipp <mad.one@gmail.com>
+  - changed status from unstarted to in_progress
   - ""
