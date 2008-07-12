@@ -1,7 +1,7 @@
 BIN         = haitus
 CC          = gcc
-DEBUGFLAGS  = #-g -DDEBUG
-OPTFLAGS    = -O3
+DEBUGFLAGS  = -g -DDEBUG
+OPTFLAGS    = -O0
 CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = 
 OBJFILES    = main.o   \

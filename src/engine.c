@@ -106,16 +106,16 @@ int run_program_static(int verbosity, int program) {
   int *ip;
 
   if (program == 1) {
-    ip = &program1;
+    ip = program1;
     printf("Executing program1:\n");
   } else if (program == 2) {
-    ip = &program2;
+    ip = program2;
     printf("Executing program2:\n");
   } else if (program == 3) {
-    ip = &program3;
+    ip = program3;
     printf("Executing program3:\n");
   } else if(program == 4) {
-    ip = &program4;
+    ip = program4;
     printf("Executing program4:\n");
   }
   return vm_engine(verbosity, ip, staticdata);
@@ -124,12 +124,17 @@ int run_program_static(int verbosity, int program) {
 
 // executes a program from a file
 int run_program_from_file(int verbosity, char* file) {
-  program *prog = load_program_from_file(verbosity,file);
-  int ret = 0;
+  program *prog = (program*)load_program_from_file(verbosity,file);
+  int ret       = 0;
+  int i         = 0;
 
   if(prog == NULL) {
     printf("Error loading from file.\n"); ret = -1;
   } else {
+#ifdef DEBUG
+    printf("run_program_from_file: ip is at %p\n",prog->ip);
+    printf("run_program_from_file: first detected opcode is %d\n",(prog->ip)[0]);
+#endif
     ret = vm_engine(verbosity,prog->ip,prog->dataseg);
     free(prog);
   }
@@ -154,6 +159,10 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
 			 &&printstr, // byte 10
 			 &&exit };   // byte 11
   int  regs[]        = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+#ifdef DEBUG
+  printf("First opcode to be executed: %d\n",ip[0]);
+#endif
 
   goto *func_table[ip[0]];
 
