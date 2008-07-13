@@ -21,9 +21,11 @@
 #include <getopt.h>
 
 static struct option longopts[] = {
-  { "verbose", no_argument, NULL, 'v'},
-  { "version", no_argument, NULL, 'V'},
-  { "help",    no_argument, NULL, 'h'},
+  { "verbose",    no_argument,       NULL, 'v'},
+  { "version",    no_argument,       NULL, 'V'},
+  { "help",       no_argument,       NULL, 'h'},
+  { "program",    required_argument, NULL, 'p'},
+  { "iterate",    required_argument, NULL, 'i'},
   { NULL, 0, NULL, 0 }
 };
 
@@ -39,21 +41,32 @@ void usage() {
   printf(" --verbose\t-v\t\tincrease verbosity\n");
   printf(" --version\t-V\t\tshow version information\n");
   printf(" --help\t\t-h\t\tshow this information\n");
+  printf(" --program=n\t-p n\t\texecute program 'n'\n");
+  printf(" --iterate=n\t-i n\t\trun program 'n' times, must be used with --program\n");
   exit(0);
 }
 
 int main(int ac, char **av) {
   int c;
   int verbosity = 0;
-  int ret = 0;
+  int ret  = 0;
+  int i = 0, iterations = 1;
+  int prog = -1;
 
-  while((c = getopt_long(ac,av,"vVh", longopts, NULL)) != -1) {
+  while((c = getopt_long(ac,av,"vVhp:i:", longopts, NULL)) != -1) {
     switch(c) {
     case 'v':
       verbosity++;
       break;
     case 'V':
       version();
+      break;
+    case 'p':
+      prog = atoi(optarg);
+      break;
+    case 'i':
+      iterations = atoi(optarg);
+      break;
     case 'h':
     case '?':
     default:
@@ -68,10 +81,16 @@ int main(int ac, char **av) {
     printf("Executing file %s\n",av[0]);
     ret = run_program_from_file(verbosity,av[0]);
   } else {
-    ret &= run_program_static(verbosity,1);
-    ret &= run_program_static(verbosity,2);
-    ret &= run_program_static(verbosity,3);
-    ret &= run_program_static(verbosity,4);
+    if(prog == -1) {
+      printf("Executing program1:\n"); ret &= run_program_static(verbosity,1);
+      printf("Executing program2:\n"); ret &= run_program_static(verbosity,2);
+      printf("Executing program3:\n"); ret &= run_program_static(verbosity,3);
+      printf("Executing program4:\n"); ret &= run_program_static(verbosity,4);
+    } else {
+      printf("Running program %d %d times.\n",prog,iterations);
+      for(i = 0; i < iterations; i++)
+	ret & run_program_static(verbosity,prog);
+    }
   }
   return ret;
 }

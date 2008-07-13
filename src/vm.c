@@ -90,19 +90,19 @@ int program4[] = { 0,    0, 15,  0,   // reg 0 = 10
 int run_program_static(int verbosity, int program) {
   int *ip;
 
-  if (program == 1) {
+  if (program == 1)
     ip = program1;
-    printf("Executing program1:\n");
-  } else if (program == 2) {
+  else if (program == 2)
     ip = program2;
-    printf("Executing program2:\n");
-  } else if (program == 3) {
+  else if (program == 3)
     ip = program3;
-    printf("Executing program3:\n");
-  } else if(program == 4) {
+  else if(program == 4)
     ip = program4;
-    printf("Executing program4:\n");
+  else {
+    printf("Incorrect program\n");
+    exit(-1);
   }
+
   return vm_engine(verbosity, ip, staticdata);
 }
 
