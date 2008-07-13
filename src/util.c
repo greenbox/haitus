@@ -24,13 +24,14 @@ int verboseprintf(int verbose, char *fmt, ...) {
   va_list va;
   int x;
 
-  va_start(va,fmt);
-  if(verbose >= 3)
-    x = vprintf(fmt,va);
-  else
-    x = 0;
-  va_end(va);
-
-  return x;
+  if(verbose != 0) {
+    va_start(va,fmt);
+    if(verbose >= 3)
+      x = vprintf(fmt,va);
+    else
+      x = 0;
+    va_end(va);
+    return x;
+  } else
+    return 0;
 }
-

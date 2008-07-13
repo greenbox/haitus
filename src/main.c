@@ -21,7 +21,7 @@
 #include <getopt.h>
 
 static struct option longopts[] = {
-  { "verbose",    no_argument,       NULL, 'v'},
+  { "verbose",    required_argument, NULL, 'v'},
   { "version",    no_argument,       NULL, 'V'},
   { "help",       no_argument,       NULL, 'h'},
   { "program",    required_argument, NULL, 'p'},
@@ -38,7 +38,7 @@ void usage() {
   printf("usage: executable [options] [file]...\n");
   printf("'file' is a bytecode file to load.\n");
   printf("available options:\n");
-  printf(" --verbose\t-v\t\tincrease verbosity\n");
+  printf(" --verbose=n\t-v n\t\tset verbosity to level n\n");
   printf(" --version\t-V\t\tshow version information\n");
   printf(" --help\t\t-h\t\tshow this information\n");
   printf(" --program=n\t-p n\t\texecute program 'n'\n");
@@ -48,15 +48,15 @@ void usage() {
 
 int main(int ac, char **av) {
   int c;
-  int verbosity = 0;
+  int verbosity = 1;
   int ret  = 0;
   int i = 0, iterations = 1;
   int prog = -1;
 
-  while((c = getopt_long(ac,av,"vVhp:i:", longopts, NULL)) != -1) {
+  while((c = getopt_long(ac,av,"v:Vhp:i:", longopts, NULL)) != -1) {
     switch(c) {
     case 'v':
-      verbosity++;
+      verbosity = atoi(optarg);
       break;
     case 'V':
       version();
