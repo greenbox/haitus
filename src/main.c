@@ -89,7 +89,7 @@ int main(int ac, char **av) {
     } else {
       printf("Running program %d %d times.\n",prog,iterations);
       for(i = 0; i < iterations; i++)
-	ret & run_program_static(verbosity,prog);
+	ret &= run_program_static(verbosity,prog);
     }
   }
   return ret;

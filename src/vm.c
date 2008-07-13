@@ -111,7 +111,6 @@ int run_program_static(int verbosity, int program) {
 int run_program_from_file(int verbosity, char* file) {
   program *prog = (program*)load_program_from_file(verbosity,file);
   int ret       = 0;
-  int i         = 0;
 
   if(prog == NULL) {
     printf("Error loading from file.\n"); ret = -1;
@@ -222,7 +221,9 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
   goto *func_table[ip[0]];
   
  show:
+#ifndef NO_OUTPUT
   printf("[op 6] reg %d ==> %d\n",ip[1],regs[ip[1]]);
+#endif
   ip += 4; 
 
   verboseprintf(verbosity,"[op 6] next op is %d\n",ip[0]);
@@ -267,8 +268,10 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
 
  printstr:
   verboseprintf(verbosity,"[op 10] printing string, data index %d\n",ip[1]);
-  
+
+#ifndef NO_OUTPUT  
   printf("%s\n",dataseg[ip[1]]);
+#endif
   ip += 4;
   
   verboseprintf(verbosity,"[op 10] next op is %d\n",ip[0]);
