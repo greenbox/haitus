@@ -1,5 +1,5 @@
 /*
-    engine.c - actual virtual machine
+    vm.c - actual virtual machine
     Copyright (C) 2008  Austin Seipp
 
     This program is free software; you can redistribute it and/or modify

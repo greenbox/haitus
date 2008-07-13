@@ -6,7 +6,7 @@ OPTFLAGS    = -O0
 CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = #-emit-llvm
 OBJFILES    = main.o   \
-	      engine.o \
+	      vm.o     \
               file.o   \
 	      util.o
 
