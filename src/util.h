@@ -20,7 +20,7 @@
 #define _UTIL_H
 
 #ifdef NO_OUTPUT
-#define verboseprintf(...) 0
+#define verboseprintf(...) 
 #else
 int verboseprintf(char *fmt, ...) 
 #ifdef __GNUC__

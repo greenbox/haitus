@@ -1,7 +1,7 @@
 BIN         = haitus
 CC          = gcc #llvm-gcc
 LD          = gcc #llvm-ld -O5
-DEBUGFLAGS  = -DNO_OUTPUT #-DDEBUG -g
+DEBUGFLAGS  = -Wall -DNO_OUTPUT #-DDEBUG -g
 OPTFLAGS    = -O3 -fomit-frame-pointer
 CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = #-emit-llvm
