@@ -1,5 +1,5 @@
 /*
-    main.c - driver that runs example vm programs
+    haitus.c - driver that runs the virtual machine
     Copyright (C) 2008  Austin Seipp
 
     This program is free software; you can redistribute it and/or modify
