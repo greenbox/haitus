@@ -5,17 +5,10 @@ DEBUGFLAGS  = -DNO_OUTPUT #-DDEBUG -g
 OPTFLAGS    = -O3 -fomit-frame-pointer
 CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = #-emit-llvm
-OBJFILES    = main.o   \
-	      vm.o     \
-              file.o   \
-	      util.o
+CFILES      = util.c file.c vm.c haitus.c
 
 all: $(OBJFILES)
-	$(LD) -o $(BIN) $(OBJFILES)
+	$(CC) -o $(BIN) $(CFILES)
 
 clean:
 	rm -f *\.o *\~ $(BIN) $(BIN).dSYM
-
-# source file building
-.c.o:
-	$(CC) $(CCFLAGS) $(OBJFLAGS) -c $<

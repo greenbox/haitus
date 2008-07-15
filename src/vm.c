@@ -85,7 +85,7 @@ int program4[] = { 0,    0, 15,  0,   // reg 0 = 15
 
 
 // runs the programs above with their static data section
-int run_program_static(int verbosity, int program) {
+int run_program_static(int program) {
   int *ip;
 
   if (program == 1)
@@ -101,13 +101,13 @@ int run_program_static(int verbosity, int program) {
     exit(-1);
   }
 
-  return vm_engine(verbosity, ip, staticdata);
+  return vm_engine(ip, staticdata);
 }
 
 
 // executes a program from a file
-int run_program_from_file(int verbosity, char* file) {
-  program *prog = (program*)load_program_from_file(verbosity,file);
+int run_program_from_file(char* file) {
+  program *prog = (program*)load_program_from_file(file);
   int ret       = 0;
 
   if(prog == NULL) {
@@ -117,7 +117,7 @@ int run_program_from_file(int verbosity, char* file) {
     printf("run_program_from_file: ip is at %p\n",prog->ip);
     printf("run_program_from_file: first detected opcode is %d\n",(prog->ip)[0]);
 #endif
-    ret = vm_engine(verbosity,prog->ip,prog->dataseg);
+    ret = vm_engine(prog->ip,prog->dataseg);
     free(prog);
   }
 
@@ -127,7 +127,7 @@ int run_program_from_file(int verbosity, char* file) {
 
 // main vm engine, runs a program with a specified data
 // segment
-int vm_engine(int verbosity, int *ip, void **dataseg) { 
+int vm_engine(int *ip, void **dataseg) { 
   void *func_table[] = { &&set,      // byte 0
 			 &&add,      // byte 1
 			 &&sub,      // byte 2
@@ -154,68 +154,68 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
 
  set:
   if (ip[3] == 0) {
-    verboseprintf(verbosity,"[op 0] setting reg %d to val %d\n",ip[1],ip[2]);
+    verboseprintf("[op 0] setting reg %d to val %d\n",ip[1],ip[2]);
     regs[ip[1]] = ip[2];
   } else if (ip[3] == 1) {
-    verboseprintf(verbosity,"[op 0] setting reg %d to reg%d(%d)\n",ip[1],ip[2],regs[ip[2]]);
+    verboseprintf("[op 0] setting reg %d to reg%d(%d)\n",ip[1],ip[2],regs[ip[2]]);
     regs[ip[1]] = regs[ip[2]];
   }
   
   ip += 4; 
-  verboseprintf(verbosity,"[op 0] next op is %d\n",ip[0]);
+  verboseprintf("[op 0] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  add:
-  verboseprintf(verbosity,"[op 1] setting reg%d = reg%d + reg%d (%d)\n",
+  verboseprintf("[op 1] setting reg%d = reg%d + reg%d (%d)\n",
 		ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] + regs[ip[3]];
   ip += 4;
 
-  verboseprintf(verbosity,"[op 1] next op is %d\n",ip[0]);
+  verboseprintf("[op 1] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
   
  sub:
-  verboseprintf(verbosity,"[op 2] setting reg%d = reg%d - reg%d (%d)\n",
+  verboseprintf("[op 2] setting reg%d = reg%d - reg%d (%d)\n",
 		ip[1],ip[2],ip[3], regs[ip[2]] - regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] - regs[ip[3]];
   ip += 4;
   
-  verboseprintf(verbosity,"[op 2] next op is %d\n",ip[0]);
+  verboseprintf("[op 2] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
   
  mul:
-  verboseprintf(verbosity,"[op 3] setting reg%d = reg%d * reg%d (%d)\n",
+  verboseprintf("[op 3] setting reg%d = reg%d * reg%d (%d)\n",
 		ip[1],ip[2],ip[3], regs[ip[2]] * regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] * regs[ip[3]];
   ip += 4;
   
-  verboseprintf(verbosity,"[op 3] next op is %d\n",ip[0]);
+  verboseprintf("[op 3] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  div:
-  verboseprintf(verbosity,"[op 4] setting reg%d = reg%d / reg%d (%d)\n",
+  verboseprintf("[op 4] setting reg%d = reg%d / reg%d (%d)\n",
 		ip[1],ip[2],ip[3], regs[ip[2]] / regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] / regs[ip[3]];
   ip += 4;
   
-  verboseprintf(verbosity,"[op 4] next op is %d\n",ip[0]);
+  verboseprintf("[op 4] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  mod:
-  verboseprintf(verbosity,"[op 5] setting reg%d = reg%d + reg%d (%d)\n",
+  verboseprintf("[op 5] setting reg%d = reg%d + reg%d (%d)\n",
 		ip[1],ip[2],ip[3], regs[ip[2]] + regs[ip[3]]);
   
   regs[ip[1]] = regs[ip[2]] % regs[ip[3]];
   ip += 4;
   
-  verboseprintf(verbosity,"[op 5] next op is %d\n",ip[0]);
+  verboseprintf("[op 5] next op is %d\n",ip[0]);
   goto *func_table[ip[0]];
   
  show:
@@ -224,22 +224,22 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
 #endif
   ip += 4; 
 
-  verboseprintf(verbosity,"[op 6] next op is %d\n",ip[0]);
+  verboseprintf("[op 6] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  jump:
-  verboseprintf(verbosity,"[op 7] jumping %s %d opcodes\n",
+  verboseprintf("[op 7] jumping %s %d opcodes\n",
 		ip[1] > 0 ? "forward" : "back",abs(ip[1]));
 
   ip += (ip[1]*4);
 
-  verboseprintf(verbosity,"[op 7] next op is %d\n",ip[0]);
+  verboseprintf("[op 7] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  nextif:
-  verboseprintf(verbosity,"[op 8] executing next instruction (op %d) if reg%d == %d\n",
+  verboseprintf("[op 8] executing next instruction (op %d) if reg%d == %d\n",
 		ip[4],ip[1], ip[2]);
 
   if(regs[ip[1]] == ip[2])
@@ -247,12 +247,12 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
   else
     ip += 8;
 
-  verboseprintf(verbosity,"[op 8] next op is %d\n",ip[0]);
+  verboseprintf("[op 8] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
 
  skipif:
-  verboseprintf(verbosity,"[op 9] skipping next instruction (op %d) if reg%d == %d\n",
+  verboseprintf("[op 9] skipping next instruction (op %d) if reg%d == %d\n",
 		ip[4],ip[1], ip[2]);
 
   if(regs[ip[1]] == ip[2])
@@ -260,23 +260,23 @@ int vm_engine(int verbosity, int *ip, void **dataseg) {
   else
     ip += 4;
 
-  verboseprintf(verbosity,"[op 9] next op is %d\n",ip[0]);
+  verboseprintf("[op 9] next op is %d\n",ip[0]);
 
   goto *func_table[ip[0]];
 
  printstr:
-  verboseprintf(verbosity,"[op 10] printing string, data index %d\n",ip[1]);
+  verboseprintf("[op 10] printing string, data index %d\n",ip[1]);
 
 #ifndef NO_OUTPUT  
   printf("%s\n",dataseg[ip[1]]);
 #endif
   ip += 4;
   
-  verboseprintf(verbosity,"[op 10] next op is %d\n",ip[0]);
+  verboseprintf("[op 10] next op is %d\n",ip[0]);
   
   goto *func_table[ip[0]];
 
  exit:
-  verboseprintf(verbosity,"[op 11] exiting with value %d\n",ip[1]);
+  verboseprintf("[op 11] exiting with value %d\n",ip[1]);
   return ip[1];
 }

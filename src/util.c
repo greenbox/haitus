@@ -18,16 +18,17 @@
 */
 #include <stdio.h>
 #include <stdarg.h>
+#include "haitus.h"
 
 #ifndef NO_OUTPUT
 // verbose printf to remove lots of if statements
-int verboseprintf(int verbose, char *fmt, ...) {
+int verboseprintf(char *fmt, ...) {
   va_list va;
   int x;
 
-  if(verbose != 0) {
+  if(option_verbose != 0) {
     va_start(va,fmt);
-    if(verbose >= 3)
+    if(option_verbose >= 3)
       x = vprintf(fmt,va);
     else
       x = 0;

@@ -22,9 +22,9 @@
 #ifdef NO_OUTPUT
 #define verboseprintf(...) 0
 #else
-int verboseprintf(int verbose, char *fmt, ...) 
+int verboseprintf(char *fmt, ...) 
 #ifdef __GNUC__
-	__attribute__ ((format (printf, 2, 3)))
+	__attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 #endif /* defined(NO_OUTPUT) */

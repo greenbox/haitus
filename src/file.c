@@ -20,9 +20,8 @@
 #include <stdlib.h>
 #include "file.h"
 
-
 // must deallocate memory returned
-program *load_program_from_file(int verbosity, char* file) {
+program *load_program_from_file(char* file) {
   program *prog        = NULL;
   FILE    *fd          = NULL;
 
