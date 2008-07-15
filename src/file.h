@@ -18,11 +18,8 @@
 */
 #ifndef _HAITUS_FILE_H_
 #define _HAITUS_FILE_H_
+#include "vm.h"
 
-typedef struct {
-  int   *ip;
-  void **dataseg;
-  int    proglen;
-} program;
+program *load_program_from_file(char* file);
 
 #endif

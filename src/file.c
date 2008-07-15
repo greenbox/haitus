@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "file.h"
+#include "vm.h"
 
 // must deallocate memory returned
 program *load_program_from_file(char* file) {
