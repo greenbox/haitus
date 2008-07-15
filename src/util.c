@@ -19,12 +19,12 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#ifndef NO_OUTPUT
 // verbose printf to remove lots of if statements
 int verboseprintf(int verbose, char *fmt, ...) {
   va_list va;
   int x;
 
-#ifndef NO_OUTPUT
   if(verbose != 0) {
     va_start(va,fmt);
     if(verbose >= 3)
@@ -34,6 +34,6 @@ int verboseprintf(int verbose, char *fmt, ...) {
     va_end(va);
     return x;
   } else
-#endif
     return 0;
 }
+#endif /* !defined(NO_OUTPUT) */

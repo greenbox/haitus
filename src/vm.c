@@ -21,6 +21,7 @@
 #include <stdarg.h>
 #include <math.h>
 #include "file.h"
+#include "util.h"
 
 /* we use a RISC-like approach; all opcodes are of the same length
    and we use relative offsets for jumps. all opcodes are 32-bits
