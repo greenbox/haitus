@@ -41,22 +41,19 @@
     11, n,  0,  0  -- exit with value 'n'
   */
 
-void* staticdata[] = { "fizz",
-		       "buzz",
-		       "hello world!",
-		       "goodbye world!" };
+void* staticdata[] = { "fizz", "buzz", "hello world!", "goodbye world!" };
 
 
 // addition
 int program1[] = { 0,  0, 10, 0,   // reg 0 = 10
-	      	   0,  1, 20, 0,   // reg 1 = 20
- 		   1,  1, 1,  0,   // reg 1 = reg1 + reg0
-		   6,  1, 0,  0,   // show reg 1
+                   0,  1, 20, 0,   // reg 1 = 20
+                   1,  1, 1,  0,   // reg 1 = reg1 + reg0
+                   6,  1, 0,  0,   // show reg 1
                    11, 0, 0,  0 }; // exit
 
 // loop
 int program2[] = { 0, 0,    10,   0,   // reg 0 = 10
-		   0, 1,    1,    0,   // reg 1 = 1
+                   0, 1,    1,    0,   // reg 1 = 1
                    6, 0,    0,    0,   // show reg 0
                    2, 0,    0,    1,   // reg 0 = reg 0 - reg 1
                    9, 0,    0,    0,   // skip next if reg 0 == 0
@@ -65,24 +62,24 @@ int program2[] = { 0, 0,    10,   0,   // reg 0 = 10
 
 // hello world
 int program3[] = { 10, 2, 0, 0,   // print "hello world!"
-		   10, 3, 0, 0,   // print "goodbye world!"
+                   10, 3, 0, 0,   // print "goodbye world!"
                    11, 0, 0, 0 }; // exit
 
 // fizzbuzz
-int program4[] = { 0,    0, 15,  0,   // reg 0 = 10
-		   0,    1, 1,   0,   // reg 1 = 1
-		   0,    2, 3,   0,   // reg 2 = 3
-		   0,    3, 5,   0,   // reg 3 = 5
-		   5,    4, 0,   2,   // reg 4 = reg0 % reg2
-		   5,    5, 0,   3,   // reg 5 = reg0 % reg3
-		   6,    0, 0,   0,   // show reg 0
-		   8,    4, 0,   0,   // do next if r4 == 0
-		   10,   0, 0,   0,   // print 'fizz'
-		   8,    5, 0,   0,   // do next if r5 == 0
-		   10,   1, 0,   0,   // print 'buzz'
-		   2,    0, 0,   1,   // reg 0 = reg 0 - reg 1
-		   9,    0, 0,   0,   // skip next if r0 == 0
-		   7, (-10), 0,  0,   // jump back 10 instructions
+int program4[] = { 0,    0, 15,  0,   // reg 0 = 15 
+                   0,    1, 1,   0,   // reg 1 = 1 
+                   0,    2, 3,   0,   // reg 2 = 3
+                   0,    3, 5,   0,   // reg 3 = 5
+                   5,    4, 0,   2,   // reg 4 = reg0 % reg2
+                   5,    5, 0,   3,   // reg 5 = reg0 % reg3
+                   6,    0, 0,   0,   // show reg 0
+                   8,    4, 0,   0,   // do next if r4 == 0
+                   10,   0, 0,   0,   // print 'fizz'
+                   8,    5, 0,   0,   // do next if r5 == 0
+                   10,   1, 0,   0,   // print 'buzz'
+                   2,    0, 0,   1,   // reg 0 = reg 0 - reg 1
+                   9,    0, 0,   0,   // skip next if r0 == 0
+                   7, (-10), 0,  0,   // jump back 10 instructions
                    11,   0, 0,   0 }; // exit
 
 
