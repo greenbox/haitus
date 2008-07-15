@@ -140,10 +140,7 @@ int vm_engine(int *ip, void **dataseg) {
 			 &&skipif,   // byte 9
 			 &&printstr, // byte 10
 			 &&exit };   // byte 11
-  int  regs[]        = { 0, 0, 0, 0, 0, 0, 0, 0, // 32 registers
-                         0, 0, 0, 0, 0, 0, 0, 0,
-			 0, 0, 0, 0, 0, 0, 0, 0,
-			 0, 0, 0, 0, 0, 0, 0, 0 };
+  int  regs[32] = { 0, };  // 32 registers
 
 
 #ifdef DEBUG
