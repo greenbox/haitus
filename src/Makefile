@@ -7,8 +7,8 @@ CCFLAGS     = $(OPTFLAGS) $(DEBUGFLAGS)
 OBJFLAGS    = #-emit-llvm
 CFILES      = util.c file.c vm.c haitus.c
 
-all: $(OBJFILES)
-	$(CC) -o $(BIN) $(CFILES)
+all: 
+	$(CC) $(CCFLAGS) -o $(BIN) $(CFILES)
 
 clean:
 	rm -f *\.o *\~ $(BIN) $(BIN).dSYM
